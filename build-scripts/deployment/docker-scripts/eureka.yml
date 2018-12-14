@@ -1,0 +1,6 @@
+version: '2'
+services:
+  fineract-cn-eureka:
+    image: 'springcloud/eureka:latest'
+    ports:
+      - 8761:8761
