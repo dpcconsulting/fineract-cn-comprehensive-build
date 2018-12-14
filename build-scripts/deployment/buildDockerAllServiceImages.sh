@@ -6,10 +6,8 @@ echo ""
 
 . envServices.sh
 
-# docker build . --build-arg service=fineract-cn-identity -f ./docker-scripts/build-script-service/Dockerfile
-
 for i in "${service_directories[@]}"; do
-    ./buildDockerImage.sh $i
+    ./buildDockerServiceImage.sh $i
 done
 
 echo "Done."

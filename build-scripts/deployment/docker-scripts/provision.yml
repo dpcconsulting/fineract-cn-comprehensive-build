@@ -1,16 +1,35 @@
-version: '2'
+version: '3'
 services:
   fineract-cn-provision:
     image: fineract-cn-provision
     environment:
-      - _JAVA_OPTIONS=-Xmx512m -Xms256m
-      - SPRING_PROFILES_ACTIVE=prod,swagger
+      - JAVA_OPTIONS=-Xmx512m -Xms256m
+      - CASSANDRA_CONTACTPOINTS=127.0.0.1:9042
+      - CASSANDRA_USER=cassandra
+      - CASSANDRA_PWD=password
+      - CASSANDRA_KEYSPACE=seshat
+      - CASSANDRA_CL=ONE
+      - CASSANDRA_CLUSTERNAME=datacenter1
+        # MariaDB Connection Settings
+      - DB_HOST=localhost
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASS=mysql
+        # ActiveMQ Settings
+      - MQ_URL='tcp://localhost:61616'
+      - MQ_USER=admin
+      - MQ_PASS=admin
     ports:
-      - 8080:8080
+      - 8080:8761
+    depends_on:
+      - fineract-cn-mariadb
+      - fineract-cn-cassandra
+
   fineract-cn-cassandra:
     extends:
       file: cassandra.yml
       service: fineract-cn-cassandra
+
   fineract-cn-mariadb:
     extends:
       file: mariadb.yml
